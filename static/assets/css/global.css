@@ -10,6 +10,7 @@
   color: var(--color);
   font-size: 1.15em;
   font-family: var(--serif);
+  line-height: 1.5;
 }
 
 /* Main Styles */
@@ -34,6 +35,10 @@ main {
 
 
 /* Generic Styles */
+p, h1, h2, h3, h4, h5, h6, blockquote {
+  margin: 1.5rem 0;
+}
+
 a {
   color: inherit;
 }
@@ -80,6 +85,7 @@ a {
 
 /* Footer */
 footer {
+  margin-top: 3rem;
   border-top: 0.125rem solid;
 }
 
