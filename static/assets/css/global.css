@@ -1,0 +1,96 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --serif: serif;
+  --accent-color: #efb3fc;
+  --color: #000;
+
+  color: var(--color);
+  font-size: 1.15em;
+  font-family: var(--serif);
+}
+
+/* Main Styles */
+body {
+  margin: 0;
+  text-align: center;
+}
+
+body > div#column {
+  display: inline-block;
+  max-width: 38rem;
+  width: calc(100% - 2rem);
+}
+
+header, #main-nav, footer {
+  text-align: center;
+}
+
+main {
+  text-align: left;
+}
+
+
+/* Generic Styles */
+a {
+  color: inherit;
+}
+
+::selection {
+  background-color: var(--accent-color);
+}
+
+.tab-only:not(:focus) {
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+
+/* Main navbar */
+#main-nav {
+  border-style: solid;
+  border-width: 0.125rem 0;
+  padding: 0.5rem 0;
+}
+
+#main-nav a {
+  text-transform: uppercase;
+  margin: 0 0.25rem;
+  text-decoration: none;
+  display: inline-block;
+}
+
+#main-nav a::after {
+  content: '';
+  width: 0px;
+  height: 2px;
+  display: block;
+  background: var(--color);
+  transition: 150ms;
+}
+
+#main-nav a:hover::after, #main-nav a:focus::after {
+  width: 100%;
+}
+
+/* Footer */
+footer {
+  border-top: 0.125rem solid;
+}
+
+.codewithlove a {
+  --accent-color: var(--color);
+  text-decoration: none;
+  font-weight: bold;
+  color: var(--accent-color);
+  transition: text-shadow 0.2s;
+}
+
+.codewithlove a:hover {
+  text-shadow: 0 0 1.3rem;
+}
