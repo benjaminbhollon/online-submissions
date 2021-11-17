@@ -1,0 +1,11 @@
+{
+  "port": 80,
+  "magazine": {
+    "title": "",
+    "dates": {
+      "open": 0,
+      "closed": 0
+    },
+    "blurb": ""
+  }
+}

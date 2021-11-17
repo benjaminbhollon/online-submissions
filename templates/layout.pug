@@ -1,0 +1,32 @@
+doctype html
+html(lang='en')
+  block defaults
+    - title = 'Untitled Page'
+    - magazineTitle = config.magazine.title || 'Generic Magazine'
+  block variables
+  block calculated
+    - finalTitle = hardTitle || title + ' | ' + magazineTitle + ' Submissions'
+  head
+    title= finalTitle
+  body
+    header
+      block header
+        h1= finalTitle
+    nav#main-nav
+      a(href="/") Home
+      a(href="/submit/") Submit
+    main
+      block content
+        p This page does not appear to have any content.
+    footer
+      block footer
+        p
+          a(href="/editors/" target="_blank" rel="noopener") Editor Dashboard
+          |  | 
+          a(href="/submit/guidelines/") Submission Guidelines
+          |  | 
+          a(href="https://github.com/benjaminbhollon/online-submissions/issues" target="_blank" rel="noopener") Submit a Bug
+
+        p.codewithlove
+          a(href="https://seewitheyesclosed.com" rel="noopener" target="_blank") &lt;/&gt; with &lt;3 by Benjamin Hollon
+        
