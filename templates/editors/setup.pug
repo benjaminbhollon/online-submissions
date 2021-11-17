@@ -1,0 +1,61 @@
+extends layout.pug
+
+block variables
+  - title = 'Initial Setup'
+  - adjectives = ['Groovy', 'Anonymous', 'Cool', 'Verbose', 'Concerned', 'Whimsy', 'Crazy', 'Domineering', 'MusicallyGifted', 'Brilliant', 'Terrified', 'Surprised', 'Gratuitous', 'Manipulative', 'Lucky', 'Grouchy', 'Overgrown', 'Rabid', 'Melancholy', 'Stereotypical', 'Wishful']
+  - nouns = ['Avocado', 'Cat', 'Kid', 'Gamer', 'Intern', 'MadScientist', 'TeddyBear', 'Mouthbrow', 'Bibliophile', 'Author', 'Trombonist', 'Cartoonist', 'Gorilla', 'Giraffe', 'Chimpanzee', 'Kindergartener', 'Goatee', 'Detective', 'Hedgehog', 'PokerFace', 'EnlightenedDespot', 'PiggyBank', 'Hoptoad']
+  - adjective = adjectives[Date.now() % adjectives.length]
+  - noun = nouns[Math.floor(Date.now() * Math.random()) % nouns.length]
+  - placeholderUsername = adjective + noun + ((Date.now() % 99) + 1)
+
+block append style
+  style.
+    #main-nav {
+      display: none;
+    }
+
+block content
+  p Welcome to your literary magazine's brand new online submission system! You currently have no editors with admin status, so let's create your first one.
+  p While we're at it, we'll also let you set some basic information about your magazine. Let's get to it!
+  +form('POST', './', [
+    {
+      type: 'heading',
+      value: 'Magazine Information',
+      description: 'Here is where you will specify some basic details about your magazine. You can change this all later.'
+    },
+    {
+      type: 'text',
+      placeholder: 'Pick something short, but sweet...',
+      label: 'Your Magazine\'s Title'
+    },
+    {
+      type: 'heading',
+      value: 'Admin User',
+      description: 'Here, you need to add the login information of your magazine\'s default admin. Ideally, this should be your lead editor or person in charge of technology. You can change this later and even add more admin users.'
+    },
+    {
+      type: 'text',
+      placeholder: 'So we know what to call you...',
+      label: 'Full Name'
+    },
+    {
+      type: 'text',
+      placeholder: 'For example, ' + placeholderUsername + '...',
+      label: 'Username'
+    },
+    {
+      type: 'email',
+      placeholder: 'For example, ' + adjective.toLowerCase() + '@' + noun.toLowerCase() + 's.com',
+      label: 'Email Address'
+    },
+    {
+      type: 'password',
+      placeholder: 'Something secure yet memorable...',
+      label: 'Password'
+    },
+    {
+      type: 'password',
+      placeholder: 'To make sure you didn\'t mess it up...',
+      label: 'Repeat Password'
+    }
+  ], 'Go!')

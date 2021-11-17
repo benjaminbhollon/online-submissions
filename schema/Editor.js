@@ -56,7 +56,7 @@ module.exports = (mongoose) => {
         type: [{
           type: String
         }],
-        default: ['editor']
+        default: []
       },
       tasks: [{
         title: String,

@@ -2,6 +2,7 @@ doctype html
 html(lang='en')
   block mixins
     include mixins/resources.pug
+    include mixins/form.pug
   block defaults
     - title = 'Untitled Page'
     - magazineTitle = config.magazine.title || 'Generic Magazine'

@@ -100,3 +100,41 @@ footer {
 .codewithlove a:hover {
   text-shadow: 0 0 1.3rem;
 }
+
+/* Forms */
+form {
+  text-align: left;
+  display: inline-block;
+  width: 100%;
+  max-width: 500px;
+}
+
+input, textarea, label {
+  margin: 0.5rem 0;
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  border-color: inherit;
+  font-size: 1em;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--light-color);
+}
+
+label {
+  font-weight: bold;
+  padding: initial;
+}
+
+input, textarea {
+  padding: 0.5em;
+  background-color: transparent;
+  color: inherit;
+  border-style: solid;
+}
+
+input[type="checkbox"] {
+  display: inline;
+  width: auto;
+}
