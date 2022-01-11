@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
+const fs = require('fs');
 
 // Import config
 const config = require('./config.json');
@@ -35,8 +36,15 @@ app.set('view engine', 'pug');
 app.set('views', './templates/');
 
 // Routes
+app.get('/submit/', async (request, response) => {
+  response.render('submit', {
+    config,
+    parameters: request.query
+  });
+});
+
 app.get('/submit/guidelines/', async (request, response) => {
-  response.render('submissionGuidelines', {
+  response.render('guidelines', {
     config,
     parameters: request.query,
     content: ''
@@ -64,8 +72,8 @@ app.get('/editors/', async (request, response) => {
     username: request.cookies.username?.toLowerCase()
   });
 
-  if (editor !== null) {
-    response.redirect(302, '/editors/dashboard');
+  if (editor !== null && request.cookies.token === editor.auth.token) {
+    return response.redirect(302, '/editors/dashboard');
   } else {
     const admin = await Editor.findOne({
       data: {
@@ -74,7 +82,7 @@ app.get('/editors/', async (request, response) => {
     });
 
     if (admin === null) {
-      response.redirect('/editors/setup/');
+      return response.redirect('/editors/setup/');
     }
   }
 
@@ -85,12 +93,13 @@ app.get('/editors/dashboard/', async (request, response) => {
   const editor = await Editor.findOne({
     username: request.cookies.username?.toLowerCase()
   });
-  if (!editor) {
+  if (!editor || request.cookies.token !== editor.auth.token) {
     return response.redirect('/editors/');
   }
 
   response.render('editors/dashboard', {
     config,
+    editor,
     parameters: request.query
   });
 });
@@ -100,6 +109,42 @@ app.get('/editors/setup/', async (request, response) => {
     config,
     parameters: request.query
   });
+});
+
+app.post('/editors/setup/', async (request, response) => {
+  if (request.body.password !== request.body.passwordConfirm) {
+    return response.render('editors/setup', {
+      config,
+      parameters: request.query
+    });
+  }
+
+  const editor = new Editor({
+    auth: {
+      username: request.body.username,
+      email: request.body.email,
+      password: request.body.password
+    },
+    data: {
+      profile: {
+        name: request.body.name
+      },
+      roles: [
+        'admin'
+      ]
+    }
+  });
+
+  await editor.save();
+
+  config.magazine.title = request.body.title;
+
+  fs.writeFileSync('./config.json', JSON.stringify(config));
+
+  response.cookie('username', editor.auth.username);
+  response.cookie('token', editor.auth.token);
+
+  response.redirect('/editors/');
 });
 
 // Listen on port in config.json

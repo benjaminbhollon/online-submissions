@@ -5,3 +5,18 @@ block variables
 
 block header
   h1 #[em= magazineTitle] Online Submissions
+
+block content
+  p Welcome to the online submission site for <em>#{magazineTitle}</em>!
+  if config.magazine.blurb
+    p= config.magazine.blurb
+  
+  if config.magazine.dates.open !== 0 && Date.now() > config.magazine.dates.open
+    p If you have something to submit and have already read our <a href="/submit/guidelines/">Submission Guidelines</a>, you can do that <a href="/submit/">here</a>. We can't wait to read what you've come up with!
+  else if true
+    p <em>#{magazineTitle}</em> is not currently open for submissions, but go ahead and familiarize yourself with the <a href="/submit/guidelines/">Submission Guidelines</a> so you'll be ready when we're back!
+      if (config.magazine.dates.open !== 0)
+        |
+        | We currently plan to reopen on #{(new Date(config.magazine.dates.open)).toDateString()}.
+
+  p If you are an editor, you can <a href="/editors/">sign in to your dashboard here</a>.

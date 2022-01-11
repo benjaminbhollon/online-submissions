@@ -1,0 +1,15 @@
+extends layout.pug
+
+block variables
+  - title = 'Submission Guidelines'
+
+block content
+  if content
+    != content
+  else if true
+    p The editors have not provided any submission guidelines, but here are some general guidelines that will likely apply:
+    ul
+      li Make sure you've checked the grammar of your submission. We recommend using <a href="https://grammarly.com" target="_blank" rel="noopener">Grammarly</a> or a similar tool. On a similar note, reading your submission out loud is an excellent way to catch errors.
+      li Though this page doesn't have guidelines, the editors may have included guidelines in the form itself. Always pay attention to those! The easiest way to get your submission rejected is to ignore the instructions.
+      li Yes, we remove most formatting for your submission (everything but alignment, bold, and italics). This is to simplify the job of the layout editor, who needs to standardize the end result anyway to ensure a consistent experience. Over 95% of the time, our system should be all you need, though we do provide an option to upload a document if you really need more precision.
+    p Good luck!

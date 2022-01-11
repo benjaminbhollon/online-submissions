@@ -24,7 +24,7 @@ module.exports = (mongoose) => {
       password: {
         type: String,
         required: [true, "Include a password!"],
-        //minLength: [12, 'For better security, your password should be at least 12 characters. Try lengthening it.'],
+        //minLength: [10, 'For better security, your password should be at least 10 characters. Try lengthening it.'],
         //maxLength: [128, 'Long passwords are great, but going over 256 characters is a bit overkill and could cause performance issues. Try shortening that.'],
         set: v => hash(v)
       },

@@ -2,3 +2,22 @@ extends layout.pug
 
 block variables
   - hardTitle = magazineTitle + ' Editor Dashboard'
+  if editor.data.roles.indexOf('admin') !== -1 && !(config.magazine.title.trim() && config.magazine.blurb.trim())
+    - tasks = [...editor.data.tasks, {title: 'Finish Setup', description: `You're not done setting up your magazine's information. <a href='/editors/settings/#magazine'>Do it now.</a>`}]
+  else
+    - tasks = [...editor.data.tasks]
+
+block header
+  h1 Welcome, #{editor.data.profile.name}!
+
+block content
+  h2 Tasks
+  if (tasks.length)
+    details
+      summary View Tasks (#{tasks.length})
+      each task of tasks
+        h4= task.title
+        p!= task.description
+  else
+    p You don't have any assigned tasks.
+  

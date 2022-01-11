@@ -1,0 +1,66 @@
+extends layout.pug
+
+block variables
+  - title = "Submit"
+  
+block append style
+  +stylesheet('https://cdn.quilljs.com/1.3.6/quill.snow.css')
+
+block append scripts
+  +script('https://cdn.quilljs.com/1.3.6/quill.js')
+
+block content
+  if config.magazine.dates.open !== 0 && Date.now() > config.magazine.dates.open
+    p Ready to submit to #{magazineTitle}? Make sure you've read our <a href="/submit/guidelines/">Submission Guidelines</a> first, then have at it!
+    +form('POST', './', [
+      {
+        type: 'heading',
+        value: 'About Your Piece',
+        description: 'Let\'s talk for a moment about you and your piece.',
+      },
+      {
+        name: 'piece.title',
+        label: 'Title',
+        placeholder: 'What is your piece called?',
+        required: true
+      },
+      {
+        name: 'author.name',
+        label: 'Author',
+        placeholder: 'Your name (or a pseudonym)...',
+        required: true
+      },
+      {
+        name: 'author.email',
+        type: 'email',
+        label: 'Your Email',
+        placeholder: 'Where we can get in touch with you...',
+        required: true
+      },
+      {
+        type: 'heading',
+        value: 'Content',
+        description: 'Here is where you can copy in the full text of your piece and '
+      },
+      {
+        type: 'custom',
+        content: `
+        <div id="editor">
+          <p>Hello World!</p>
+          <p>Some initial <strong>bold</strong> text</p>
+          <p><br></p>
+        </div>
+        <script>
+          var quill = new Quill('#editor', {
+            theme: 'snow'
+          });
+        </script>
+        `
+      }
+    ], 'Submit!')
+    
+  else if true
+    p <em>#{magazineTitle}</em> is not currently open for submissions, but go ahead and familiarize yourself with the <a href="/submit/guidelines/">Submission Guidelines</a> so you'll be ready when we're back!
+      if (config.magazine.dates.open !== 0)
+        |
+        | We currently plan to reopen on #{(new Date(config.magazine.dates.open)).toDateString()}.
