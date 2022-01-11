@@ -1,4 +1,5 @@
 {
-  "/": "homepage",
-  "/guidelines/": "guidelines"
+  "/": "homepage.pug",
+  "/guidelines/": "guidelines.pug",
+  "/editors/help/": "editors/help.pug"
 }

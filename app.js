@@ -39,7 +39,8 @@ app.set('views', './templates/');
 app.get('/submit/', async (request, response) => {
   response.render('submit', {
     config,
-    parameters: request.query
+    parameters: request.query,
+    cookies: request.cookies,
   });
 });
 
@@ -47,7 +48,8 @@ app.get('/submit/guidelines/', async (request, response) => {
   response.render('guidelines', {
     config,
     parameters: request.query,
-    content: ''
+    content: '',
+    cookies: request.cookies,
   });
 });
 
@@ -68,12 +70,16 @@ app.get('/editors/', async (request, response) => {
       console.log(editor);
   });*/
 
+  console.log('hello?', 1);
+
   const editor = await Editor.findOne({
     username: request.cookies.username?.toLowerCase()
   });
 
+  console.log('hello?', 2);
+
   if (editor !== null && request.cookies.token === editor.auth.token) {
-    return response.redirect(302, '/editors/dashboard');
+    return response.redirect(302, '/editors/dashboard/');
   } else {
     const admin = await Editor.findOne({
       data: {
@@ -86,7 +92,9 @@ app.get('/editors/', async (request, response) => {
     }
   }
 
-  response.json({success: false});
+  console.log('hello?', 3);
+
+  return response.json({success: false});
 });
 
 app.get('/editors/dashboard/', async (request, response) => {
@@ -100,6 +108,7 @@ app.get('/editors/dashboard/', async (request, response) => {
   response.render('editors/dashboard', {
     config,
     editor,
+    cookies: request.cookies,
     parameters: request.query
   });
 });
@@ -107,6 +116,7 @@ app.get('/editors/dashboard/', async (request, response) => {
 app.get('/editors/setup/', async (request, response) => {
   response.render('editors/setup', {
     config,
+    cookies: request.cookies,
     parameters: request.query
   });
 });
@@ -115,6 +125,7 @@ app.post('/editors/setup/', async (request, response) => {
   if (request.body.password !== request.body.passwordConfirm) {
     return response.render('editors/setup', {
       config,
+      cookies: request.cookies,
       parameters: request.query
     });
   }
@@ -144,7 +155,9 @@ app.post('/editors/setup/', async (request, response) => {
   response.cookie('username', editor.auth.username);
   response.cookie('token', editor.auth.token);
 
-  response.redirect('/editors/');
+  console.log('hello?');
+
+  response.redirect(302, '/editors/dashboard/');
 });
 
 // Listen on port in config.json
