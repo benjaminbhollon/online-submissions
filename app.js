@@ -113,6 +113,22 @@ app.get('/editors/dashboard/', async (request, response) => {
   });
 });
 
+app.get('/editors/settings/', async (request, response) => {
+  const editor = await Editor.findOne({
+    username: request.cookies.username?.toLowerCase()
+  });
+  if (!editor || request.cookies.token !== editor.auth.token) {
+    return response.redirect('/editors/');
+  }
+
+  response.render('editors/settings.pug', {
+    config,
+    editor,
+    cookies: request.cookies,
+    parameters: request.query
+  });
+});
+
 app.get('/editors/setup/', async (request, response) => {
   response.render('editors/setup', {
     config,

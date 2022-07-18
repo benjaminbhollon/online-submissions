@@ -1,0 +1,43 @@
+extends layout.pug
+
+block variables
+  - title = "Settings"
+  
+block content
+  h2 Account Settings
+  +form('POST', './account/', [
+    {
+      label: 'Username',
+      disabled: true,
+      value: editor.auth.username,
+    },
+    {
+      type: 'paragraph',
+      value: "You cannot change your username.",
+      required: true
+    },
+    {
+      label: 'Email address',
+      value: editor.auth.email,
+      type: 'email',
+      required: true
+    },
+    {
+      label: 'Your Name',
+      value: editor.data.profile.name,
+      required: true
+    }
+  ], 'Submit')
+  //-,
+    {
+      type: 'heading',
+      value: 'Change your password'
+    },
+    {
+      type: 'password',
+      label: 'Your old password',
+      placeholder: "Leave this blank if you don't want to change it"
+    }
+  if editor.data.roles.indexOf('admin') !== -1
+    h2 Magazine Settings
+    +form('')
